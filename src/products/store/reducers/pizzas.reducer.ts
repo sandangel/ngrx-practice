@@ -3,46 +3,15 @@ import {Pizza} from 'src/products/models/pizza.model';
 import * as fromPizzas from '../actions/pizzas.action';
 
 export interface PizzaState {
-  data: Pizza[];
+  entities: {[id: number]: Pizza};
   loaded: boolean;
   loading: boolean;
 }
 
 export const initialState: PizzaState = {
-  data: [
-    {
-      name: "Blazin' Inferno",
-      toppings: [
-        {
-          id: 10,
-          name: 'pepperoni'
-        },
-        {
-          id: 9,
-          name: 'pepper'
-        },
-        {
-          id: 3,
-          name: 'basil'
-        },
-        {
-          id: 4,
-          name: 'chili'
-        },
-        {
-          id: 7,
-          name: 'olive'
-        },
-        {
-          id: 2,
-          name: 'bacon'
-        }
-      ],
-      id: 1
-    }
-  ],
+  entities: {},
   loaded: false,
-  loading: false
+  loading: false,
 };
 
 export function reducer(state = initialState, action: fromPizzas.PizzasAction): PizzaState {
@@ -50,15 +19,21 @@ export function reducer(state = initialState, action: fromPizzas.PizzasAction): 
     case fromPizzas.LOAD_PIZZAS: {
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     }
 
     case fromPizzas.LOAD_PIZZAS_SUCCESS: {
+      const pizzas = action.payload;
+      const entities = pizzas.reduce(
+        (entities: {[id: number]: Pizza}, pizza) => ({...entities, [pizza.id]: pizza}),
+        {...state.entities},
+      );
       return {
         ...state,
+        entities,
         loading: false,
-        loaded: true
+        loaded: true,
       };
     }
 
@@ -66,7 +41,7 @@ export function reducer(state = initialState, action: fromPizzas.PizzasAction): 
       return {
         ...state,
         loading: false,
-        loaded: false
+        loaded: false,
       };
     }
   }
@@ -75,4 +50,4 @@ export function reducer(state = initialState, action: fromPizzas.PizzasAction): 
 
 export const getPizzasLoading = (state: PizzaState) => state.loading;
 export const getPizzasLoaded = (state: PizzaState) => state.loaded;
-export const getPizzas = (state: PizzaState) => state.data;
+export const getPizzasEntities = (state: PizzaState) => state.entities;
