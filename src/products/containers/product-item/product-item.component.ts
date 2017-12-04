@@ -1,6 +1,6 @@
 import {tap} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 
 import {Pizza} from '../../models/pizza.model';
 import {Topping} from '../../models/topping.model';
@@ -26,6 +26,7 @@ import {Observable} from 'rxjs/Observable';
       </pizza-form>
     </div>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductItemComponent implements OnInit {
   pizza$: Observable<Pizza>;

@@ -3,7 +3,8 @@ import {Actions, Effect} from '@ngrx/effects';
 
 import * as pizzaActions from '../actions/pizzas.action';
 import * as fromServices from '../../services';
-import {switchMap, map, catchError} from 'rxjs/operators';
+import * as fromRoot from '../../../app/store';
+import {switchMap, map, catchError, mergeMap} from 'rxjs/operators';
 import {of} from 'rxjs/observable/of';
 
 @Injectable()
@@ -33,7 +34,10 @@ export class PizzasEffects {
         this.pizzaService
           .createPizza(pizza)
           .pipe(
-            map(pizza => new pizzaActions.CreatePizzasSuccess(pizza)),
+            mergeMap(pizza => [
+              new pizzaActions.CreatePizzasSuccess(pizza),
+              new fromRoot.Go({path: ['/products', pizza.id]}),
+            ]),
             catchError(error => of(new pizzaActions.CreatePizzasFail(error))),
           ),
       ),
@@ -48,7 +52,10 @@ export class PizzasEffects {
         this.pizzaService
           .updatePizza(pizza)
           .pipe(
-            map(pizza => new pizzaActions.UpdatePizzasSuccess(pizza)),
+            mergeMap(pizza => [
+              new pizzaActions.UpdatePizzasSuccess(pizza),
+              new fromRoot.Go({path: ['/products']}),
+            ]),
             catchError(error => of(new pizzaActions.UpdatePizzasFail(error))),
           ),
       ),
@@ -63,7 +70,10 @@ export class PizzasEffects {
         this.pizzaService
           .removePizza(pizza)
           .pipe(
-            map(() => new pizzaActions.RemovePizzasSuccess(pizza)),
+            mergeMap(() => [
+              new pizzaActions.RemovePizzasSuccess(pizza),
+              new fromRoot.Go({path: ['/products']}),
+            ]),
             catchError(error => of(new pizzaActions.RemovePizzasFail(error))),
           ),
       ),

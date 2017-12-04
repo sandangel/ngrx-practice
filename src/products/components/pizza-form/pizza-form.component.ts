@@ -7,18 +7,12 @@ import {
   SimpleChanges,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  FormArray,
-  FormBuilder,
-  Validators,
-} from '@angular/forms';
+import {FormControl, FormGroup, FormArray, FormBuilder, Validators} from '@angular/forms';
 
-import { map } from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 
-import { Pizza } from '../../models/pizza.model';
-import { Topping } from '../../models/topping.model';
+import {Pizza} from '../../models/pizza.model';
+import {Topping} from '../../models/topping.model';
 
 @Component({
   selector: 'pizza-form',
@@ -85,6 +79,7 @@ import { Topping } from '../../models/topping.model';
       </form>
     </div>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PizzaFormComponent implements OnChanges {
   exists = false;
@@ -119,28 +114,26 @@ export class PizzaFormComponent implements OnChanges {
     }
     this.form
       .get('toppings')
-      .valueChanges.pipe(
-        map(toppings => toppings.map((topping: Topping) => topping.id))
-      )
+      .valueChanges.pipe(map(toppings => toppings.map((topping: Topping) => topping.id)))
       .subscribe(value => this.selected.emit(value));
   }
 
   createPizza(form: FormGroup) {
-    const { value, valid } = form;
+    const {value, valid} = form;
     if (valid) {
       this.create.emit(value);
     }
   }
 
   updatePizza(form: FormGroup) {
-    const { value, valid, touched } = form;
+    const {value, valid, touched} = form;
     if (touched && valid) {
-      this.update.emit({ ...this.pizza, ...value });
+      this.update.emit({...this.pizza, ...value});
     }
   }
 
   removePizza(form: FormGroup) {
-    const { value } = form;
-    this.remove.emit({ ...this.pizza, ...value });
+    const {value} = form;
+    this.remove.emit({...this.pizza, ...value});
   }
 }
