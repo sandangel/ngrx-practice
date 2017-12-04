@@ -1,4 +1,4 @@
-import {Pizza} from 'src/products/models/pizza.model';
+import {Pizza} from '../../models/pizza.model';
 
 import * as fromPizzas from '../actions/pizzas.action';
 
@@ -42,6 +42,29 @@ export function reducer(state = initialState, action: fromPizzas.PizzasAction): 
         ...state,
         loading: false,
         loaded: false,
+      };
+    }
+
+    case fromPizzas.UPDATE_PIZZAS_SUCCESS:
+    case fromPizzas.CREATE_PIZZAS_SUCCESS: {
+      const pizza = action.payload;
+      const entities = {
+        ...state.entities,
+        [pizza.id]: pizza,
+      };
+
+      return {
+        ...state,
+        entities,
+      };
+    }
+
+    case fromPizzas.REMOVE_PIZZAS_SUCCESS: {
+      const pizza = action.payload;
+      const {[pizza.id]: removed, ...entities} = state.entities;
+      return {
+        ...state,
+        entities,
       };
     }
   }
