@@ -59,6 +59,6 @@ export function reducer(state = initialState, action: fromToppings.ToppingsActio
 }
 
 export const getToppingEntities = (state: ToppingsState) => state.entities;
-export const getToppingLoaded = (state: ToppingsState) => state.loaded;
-export const getToppingLoading = (state: ToppingsState) => state.loading;
+export const getToppingsLoaded = (state: ToppingsState) => state.loaded;
+export const getToppingsLoading = (state: ToppingsState) => state.loading;
 export const getSelectedToppings = (state: ToppingsState) => state.selectedToppings;

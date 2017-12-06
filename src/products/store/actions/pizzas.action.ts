@@ -17,54 +17,54 @@ export class LoadPizzasSuccess implements Action {
   constructor(public payload: Pizza[]) {}
 }
 
-export const CREATE_PIZZAS = '[Products] Create Pizzas';
-export const CREATE_PIZZAS_FAIL = '[Products] Create Pizzas Fail';
-export const CREATE_PIZZAS_SUCCESS = '[Products] Create Pizzas Success';
+export const CREATE_PIZZA = '[Products] Create Pizzas';
+export const CREATE_PIZZA_FAIL = '[Products] Create Pizzas Fail';
+export const CREATE_PIZZA_SUCCESS = '[Products] Create Pizzas Success';
 
-export class CreatePizzas implements Action {
-  readonly type = CREATE_PIZZAS;
+export class CreatePizza implements Action {
+  readonly type = CREATE_PIZZA;
   constructor(public payload: Pizza) {}
 }
-export class CreatePizzasFail implements Action {
-  readonly type = CREATE_PIZZAS_FAIL;
+export class CreatePizzaFail implements Action {
+  readonly type = CREATE_PIZZA_FAIL;
   constructor(public payload: any) {}
 }
-export class CreatePizzasSuccess implements Action {
-  readonly type = CREATE_PIZZAS_SUCCESS;
+export class CreatePizzaSuccess implements Action {
+  readonly type = CREATE_PIZZA_SUCCESS;
   constructor(public payload: Pizza) {}
 }
 
-export const UPDATE_PIZZAS = '[Products] Update Pizzas';
-export const UPDATE_PIZZAS_FAIL = '[Products] Update Pizzas Fail';
-export const UPDATE_PIZZAS_SUCCESS = '[Products] Update Pizzas Success';
+export const UPDATE_PIZZA = '[Products] Update Pizzas';
+export const UPDATE_PIZZA_FAIL = '[Products] Update Pizzas Fail';
+export const UPDATE_PIZZA_SUCCESS = '[Products] Update Pizzas Success';
 
-export class UpdatePizzas implements Action {
-  readonly type = UPDATE_PIZZAS;
+export class UpdatePizza implements Action {
+  readonly type = UPDATE_PIZZA;
   constructor(public payload: Pizza) {}
 }
-export class UpdatePizzasFail implements Action {
-  readonly type = UPDATE_PIZZAS_FAIL;
+export class UpdatePizzaFail implements Action {
+  readonly type = UPDATE_PIZZA_FAIL;
   constructor(public payload: any) {}
 }
-export class UpdatePizzasSuccess implements Action {
-  readonly type = UPDATE_PIZZAS_SUCCESS;
+export class UpdatePizzaSuccess implements Action {
+  readonly type = UPDATE_PIZZA_SUCCESS;
   constructor(public payload: Pizza) {}
 }
 
-export const REMOVE_PIZZAS = '[Products] Remove Pizzas';
-export const REMOVE_PIZZAS_FAIL = '[Products] Remove Pizzas Fail';
-export const REMOVE_PIZZAS_SUCCESS = '[Products] Remove Pizzas Success';
+export const REMOVE_PIZZA = '[Products] Remove Pizzas';
+export const REMOVE_PIZZA_FAIL = '[Products] Remove Pizzas Fail';
+export const REMOVE_PIZZA_SUCCESS = '[Products] Remove Pizzas Success';
 
-export class RemovePizzas implements Action {
-  readonly type = REMOVE_PIZZAS;
+export class RemovePizza implements Action {
+  readonly type = REMOVE_PIZZA;
   constructor(public payload: Pizza) {}
 }
-export class RemovePizzasFail implements Action {
-  readonly type = REMOVE_PIZZAS_FAIL;
+export class RemovePizzaFail implements Action {
+  readonly type = REMOVE_PIZZA_FAIL;
   constructor(public payload: any) {}
 }
-export class RemovePizzasSuccess implements Action {
-  readonly type = REMOVE_PIZZAS_SUCCESS;
+export class RemovePizzaSuccess implements Action {
+  readonly type = REMOVE_PIZZA_SUCCESS;
   constructor(public payload: Pizza) {}
 }
 
@@ -72,12 +72,12 @@ export type PizzasAction =
   | LoadPizzas
   | LoadPizzasFail
   | LoadPizzasSuccess
-  | CreatePizzas
-  | CreatePizzasFail
-  | CreatePizzasSuccess
-  | UpdatePizzas
-  | UpdatePizzasFail
-  | UpdatePizzasSuccess
-  | RemovePizzas
-  | RemovePizzasFail
-  | RemovePizzasSuccess;
+  | CreatePizza
+  | CreatePizzaFail
+  | CreatePizzaSuccess
+  | UpdatePizza
+  | UpdatePizzaFail
+  | UpdatePizzaSuccess
+  | RemovePizza
+  | RemovePizzaFail
+  | RemovePizzaSuccess;

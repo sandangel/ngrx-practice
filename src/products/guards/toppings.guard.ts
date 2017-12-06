@@ -14,7 +14,7 @@ export class ToppingssGuard implements CanActivate {
   }
 
   checkStore(): Observable<boolean> {
-    return this.store.select(fromStore.getToppingLoaded).pipe(
+    return this.store.select(fromStore.getToppingsLoaded).pipe(
       tap(loaded => {
         if (!loaded) this.store.dispatch(new fromStore.LoadToppings());
       }),

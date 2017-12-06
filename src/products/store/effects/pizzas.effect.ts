@@ -4,7 +4,7 @@ import {Actions, Effect} from '@ngrx/effects';
 import * as pizzaActions from '../actions/pizzas.action';
 import * as fromServices from '../../services';
 import * as fromRoot from '../../../app/store';
-import {switchMap, map, catchError, mergeMap} from 'rxjs/operators';
+import {switchMap, map, catchError} from 'rxjs/operators';
 import {of} from 'rxjs/observable/of';
 
 @Injectable()
@@ -27,55 +27,59 @@ export class PizzasEffects {
 
   @Effect()
   createPizza$ = this.actions$
-    .ofType<pizzaActions.CreatePizzas>(pizzaActions.CREATE_PIZZAS)
+    .ofType<pizzaActions.CreatePizza>(pizzaActions.CREATE_PIZZA)
     .pipe(
       map(action => action.payload),
       switchMap(pizza =>
         this.pizzaService
           .createPizza(pizza)
           .pipe(
-            mergeMap(pizza => [
-              new pizzaActions.CreatePizzasSuccess(pizza),
-              new fromRoot.Go({path: ['/products', pizza.id]}),
-            ]),
-            catchError(error => of(new pizzaActions.CreatePizzasFail(error))),
+            map(pizza => new pizzaActions.CreatePizzaSuccess(pizza)),
+            catchError(error => of(new pizzaActions.CreatePizzaFail(error))),
           ),
       ),
     );
 
   @Effect()
+  createPizzaSuccess$ = this.actions$
+    .ofType<pizzaActions.CreatePizzaSuccess>(pizzaActions.CREATE_PIZZA_SUCCESS)
+    .pipe(
+      map(action => action.payload),
+      map(pizza => new fromRoot.Go({path: ['/products', pizza.id]})),
+    );
+
+  @Effect()
   updatePizza$ = this.actions$
-    .ofType<pizzaActions.UpdatePizzas>(pizzaActions.UPDATE_PIZZAS)
+    .ofType<pizzaActions.UpdatePizza>(pizzaActions.UPDATE_PIZZA)
     .pipe(
       map(action => action.payload),
       switchMap(pizza =>
         this.pizzaService
           .updatePizza(pizza)
           .pipe(
-            mergeMap(pizza => [
-              new pizzaActions.UpdatePizzasSuccess(pizza),
-              new fromRoot.Go({path: ['/products']}),
-            ]),
-            catchError(error => of(new pizzaActions.UpdatePizzasFail(error))),
+            map(pizza => new pizzaActions.UpdatePizzaSuccess(pizza)),
+            catchError(error => of(new pizzaActions.UpdatePizzaFail(error))),
           ),
       ),
     );
 
   @Effect()
   removePizza$ = this.actions$
-    .ofType<pizzaActions.RemovePizzas>(pizzaActions.REMOVE_PIZZAS)
+    .ofType<pizzaActions.RemovePizza>(pizzaActions.REMOVE_PIZZA)
     .pipe(
       map(action => action.payload),
       switchMap(pizza =>
         this.pizzaService
           .removePizza(pizza)
           .pipe(
-            mergeMap(() => [
-              new pizzaActions.RemovePizzasSuccess(pizza),
-              new fromRoot.Go({path: ['/products']}),
-            ]),
-            catchError(error => of(new pizzaActions.RemovePizzasFail(error))),
+            map(() => new pizzaActions.RemovePizzaSuccess(pizza)),
+            catchError(error => of(new pizzaActions.RemovePizzaFail(error))),
           ),
       ),
     );
+
+  @Effect()
+  handlePizzaSuccess$ = this.actions$
+    .ofType(pizzaActions.UPDATE_PIZZA_SUCCESS, pizzaActions.REMOVE_PIZZA_SUCCESS)
+    .pipe(map(pizza => new fromRoot.Go({path: ['/products']})));
 }

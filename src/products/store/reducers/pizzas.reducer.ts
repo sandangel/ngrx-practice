@@ -45,8 +45,8 @@ export function reducer(state = initialState, action: fromPizzas.PizzasAction): 
       };
     }
 
-    case fromPizzas.UPDATE_PIZZAS_SUCCESS:
-    case fromPizzas.CREATE_PIZZAS_SUCCESS: {
+    case fromPizzas.UPDATE_PIZZA_SUCCESS:
+    case fromPizzas.CREATE_PIZZA_SUCCESS: {
       const pizza = action.payload;
       const entities = {
         ...state.entities,
@@ -59,7 +59,7 @@ export function reducer(state = initialState, action: fromPizzas.PizzasAction): 
       };
     }
 
-    case fromPizzas.REMOVE_PIZZAS_SUCCESS: {
+    case fromPizzas.REMOVE_PIZZA_SUCCESS: {
       const pizza = action.payload;
       const {[pizza.id]: removed, ...entities} = state.entities;
       return {
